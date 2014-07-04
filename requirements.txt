@@ -1,3 +1,4 @@
+#django basics
 Django==1.6.5
 South==0.8.4
 psycopg2==2.5.2
@@ -5,6 +6,9 @@ django-compressor==1.4
 django-debug-toolbar==1.0.1
 gunicorn==18.0
 Fabric==1.8.1
+
+#sms manager
+
 
 # debugging tools
 ipython==1.2.1
