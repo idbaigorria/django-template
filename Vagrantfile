@@ -30,5 +30,5 @@ Vagrant::Config.run do |config|
 	config.vm.share_folder "project", "/home/vagrant/light_control", "."
 	
 	# Enable provisioning with a shell script.
-	config.vm.provision :shell, :path => "etc/install/install.sh", :args => "light_control"
+	config.vm.provision :shell, :path => "etc/install/install.sh", :args => "project"
 end
