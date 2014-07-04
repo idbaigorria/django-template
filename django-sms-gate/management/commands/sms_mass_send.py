@@ -1,6 +1,8 @@
+from __future__ import absolute_import
+
 from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
-from smsgate.models import Sms
+from ...models import Sms
 
 
 class Command(BaseCommand):

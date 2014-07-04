@@ -1,5 +1,7 @@
-from smsgate.models import Sms, SmsRecipient
-from smsgate import settings
+from __future__ import absolute_import
+
+from . models import Sms, SmsRecipient
+from . import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages

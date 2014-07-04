@@ -1,6 +1,7 @@
-from django.conf import settings
-from smsgate.constants import *
+from __future__ import absolute_import
 
+from django.conf import settings
+from . constants import *
 
 def _get(name, default):
     return getattr(settings, 'SMSGATE_' + name, default)
@@ -11,7 +12,7 @@ CREDENTIALS = _get('CREDENTIALS', {})
 
 # Please specify existing backend or your backend module,
 # for example 'myapp.sms_backend'
-BACKEND = _get('BACKEND', 'smsgate.backends.mssgbox_com.http_v1')
+BACKEND = _get('BACKEND', 'django-sms-gate.backends.mssgbox_com.http_v1')
 
 # Send SMS (or not) on saving in database.
 # You may turn it off to send messages by cron.

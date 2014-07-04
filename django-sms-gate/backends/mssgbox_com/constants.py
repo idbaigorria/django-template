@@ -1,4 +1,6 @@
-from smsgate.constants import *
+from __future__ import absolute_import
+
+from ...constants import *
 from django.utils.translation import ugettext_noop as _
 
 ERROR_CODES = {

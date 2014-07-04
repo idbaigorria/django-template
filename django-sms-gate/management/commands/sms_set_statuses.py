@@ -1,4 +1,6 @@
-from smsgate.models import SmsRecipient
+from __future__ import absolute_import
+
+from ...models import SmsRecipient
 from django.core.management.base import BaseCommand, CommandError
 import re
 

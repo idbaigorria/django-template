@@ -1,6 +1,8 @@
-from smsgate import settings
-from smsgate import send_sms, send_mass_sms, get_sms_statuses
-from smsgate.constants import *
+from __future__ import absolute_import
+
+from . import settings
+from . import send_sms, send_mass_sms, get_sms_statuses
+from . constants import *
 
 from django.db import models
 from django.core.validators import RegexValidator

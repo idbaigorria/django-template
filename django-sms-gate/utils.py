@@ -1,4 +1,6 @@
-from smsgate import settings
+from __future__ import absolute_import
+
+from . import settings
 import urllib
 import urllib2
 

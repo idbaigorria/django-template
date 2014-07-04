@@ -1,8 +1,10 @@
-from smsgate.utils import http_request
-from smsgate.exceptions import SmsGateError, SmsGateUnknownResponse
-from smsgate.settings import *
-from smsgate.constants import *
-from smsgate.backends.mssgbox_com.constants import *
+from __future__ import absolute_import
+
+from ... utils import http_request
+from ... exceptions import SmsGateError, SmsGateUnknownResponse
+from ... settings import *
+from ... constants import *
+from ... backends.mssgbox_com.constants import *
 from django.core.exceptions import ImproperlyConfigured
 import re
 

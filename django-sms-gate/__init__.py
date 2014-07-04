@@ -2,7 +2,10 @@
 Module for working with SMS on different gateways.
 '''
 
-from smsgate import settings
+from __future__ import absolute_import
+
+from . import settings
+from . constants import *
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_noop as _

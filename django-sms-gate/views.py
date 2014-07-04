@@ -1,6 +1,8 @@
-from smsgate import backend
-from smsgate import settings
-from smsgate.models import SmsRecipient
+from __future__ import absolute_import
+
+from . import backend
+from . import settings
+from . models import SmsRecipient
 from django.http import HttpResponse
 
 
