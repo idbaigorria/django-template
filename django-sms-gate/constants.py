@@ -1,9 +1,0 @@
-STATUS_QUEUED = 1  # Message local queued.
-STATUS_CANCELED = 2  # Message was canceled before sending
-STATUS_SENT = 3  # Message is sent ok, but status unknown.
-STATUS_UNSENT = 4  # Message was not sent, and never will be.
-STATUS_UNKNOWN = 5  # Message status is unknown
-STATUS_REMOTE_QUEUED = 6  # Message queued on remote server
-STATUS_DELIVERED = 7  # Message delivered to recipient
-STATUS_UNDELIVERED = 8  # Message undelivered to recipient
-STATUS_EXPIRED = 9  # Message was sent, but requesting status expired
