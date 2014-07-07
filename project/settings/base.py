@@ -5,6 +5,10 @@ import sys
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 
+# The directory with this project's templates, settings, urls, static dir,
+# wsgi.py, fixtures, etc.
+PROJECT_PATH = os.path.join(PROJECT_ROOT, 'project')
+
 # Modify sys.path to include the lib directory
 sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
@@ -61,12 +65,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'public', 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -83,6 +87,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_PATH, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -104,6 +109,16 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.static',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,9 +136,11 @@ ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_PATH, 'templates'),
+)
+
+FIXTURE_DIRS = (
+    os.path.join(PROJECT_PATH, 'fixtures'),
 )
 
 INSTALLED_APPS = (
@@ -133,19 +150,36 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
+
+    # External apps
+    "django_nose",
+    #"djtables",  # required by rapidsms.contrib.locations
+    "django_tables2",
+    "selectable",
 
     'south',
     'compressor',
     'debug_toolbar',
 
-    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
-    # sms api
-    'django-sms-gate',
-
     'core',
+    'public_lights',
+
+    # RapidSMS
+    "rapidsms",
+    "rapidsms.backends.database",
+    "rapidsms.contrib.handlers",
+    "rapidsms.contrib.httptester",
+    "rapidsms.contrib.messagelog",
+    "rapidsms.contrib.messaging",
+    "rapidsms.contrib.registration",
+    #"rapidsms.contrib.echo",
+    "rapidsms.contrib.default",  # Must be last
+
+
 )
 
 EMAIL_SUBJECT_PREFIX = '[light_control] '
@@ -191,3 +225,18 @@ LOGGING = {
         },
     }
 }
+
+
+INSTALLED_BACKENDS = {
+    "message_tester": {
+        "ENGINE": "rapidsms.backends.database.DatabaseBackend",
+    },
+}
+
+LOGIN_REDIRECT_URL = '/'
+
+RAPIDSMS_HANDLERS = (
+    #'rapidsms.contrib.echo.handlers.echo.EchoHandler',
+    'rapidsms.contrib.echo.handlers.ping.PingHandler',
+    'public_lights.handlers.PanelHandler'
+)
