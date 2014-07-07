@@ -13,3 +13,6 @@
 [submodule "cookbooks/vim"]
 	path = cookbooks/vim
 	url = git://github.com/opscode-cookbooks/vim.git
+[submodule "public-lights"]
+	path = public-lights
+	url = https://github.com/idbaigorria/public-lights.git
