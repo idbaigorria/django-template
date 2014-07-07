@@ -37,6 +37,8 @@ apt-get install -y libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev liblcms2-
 apt-get install -y git
 # Mercurial support
 apt-get install -y mercurial git-fast-import
+# Kannel
+apt-get install -y kannel
 
 # Postgresql
 if ! command -v psql; then
