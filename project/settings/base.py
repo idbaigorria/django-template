@@ -138,6 +138,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
+    os.path.join(PROJECT_ROOT, 'public_lights', 'templates')
 )
 
 FIXTURE_DIRS = (
@@ -166,13 +167,18 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     # bootstrap django
+    'bootstrap3',
     'django_admin_bootstrapped.bootstrap3',
     'django_admin_bootstrapped',
     'django.contrib.admin',
-    'bootstrap3',
 
     'core',
     'public_lights',
+
+    # geojson
+    'jsonfield',
+    'djgeojson',
+    'leaflet',
 
     # RapidSMS
     "rapidsms",
@@ -185,9 +191,8 @@ INSTALLED_APPS = (
     "rapidsms.contrib.registration",
     #"rapidsms.contrib.echo",
     "rapidsms.contrib.default",  # Must be last
-
-
 )
+
 
 EMAIL_SUBJECT_PREFIX = '[light_control] '
 
@@ -203,6 +208,14 @@ COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
     ('text/less', 'lessc --no-color {infile} {outfile}'),
 )
+
+LOGFILE = '/var/log/django/public-lights.log'
+
+try:
+    a = open(LOGFILE, 'a')
+    a.close()
+except:
+    LOGFILE='public-lights.log'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -238,7 +251,7 @@ LOGGING = {
         'public_lights': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/var/log/django/public-lights.log',
+            'filename': LOGFILE,
         },
         'console':{
             'level': 'DEBUG',
@@ -298,3 +311,13 @@ RAPIDSMS_HANDLERS = (
     'rapidsms.contrib.echo.handlers.ping.PingHandler',
     'public_lights.handlers.PanelHandler'
 )
+
+# leaflet config
+LEAFLET_CONFIG = {
+    # default display configuration, center into Granadero Baigorria, Santa Fe, Arg
+    # this are in long lat
+    'DEFAULT_CENTER': (-32.85818, -60.706956),
+    'DEFAULT_ZOOM': 14,
+    'MIN_ZOOM': 1,
+    'MAX_ZOOM': 18,
+}
