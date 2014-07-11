@@ -1,6 +1,3 @@
-[submodule "public-lights"]
-	path = public_lights
-	url = https://github.com/idbaigorria/public-lights.git
 [submodule "public_lights"]
 	path = public_lights
 	url = https://github.com/idbaigorria/public-lights.git
