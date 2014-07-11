@@ -126,6 +126,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
@@ -150,7 +151,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
 
     # External apps
     "django_nose",
@@ -163,7 +163,13 @@ INSTALLED_APPS = (
     'debug_toolbar',
 
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
+
+    # bootstrap django
+    'django_admin_bootstrapped.bootstrap3',
+    'django_admin_bootstrapped',
+    'django.contrib.admin',
+    'bootstrap3',
 
     'core',
     'public_lights',

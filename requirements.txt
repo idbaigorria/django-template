@@ -12,3 +12,13 @@ RapidSMS==0.17.0
 
 # debugging tools
 ipython==1.2.1
+
+# django bootstrap
+django-bootstrap3==4.8.2
+django-admin-bootstrapped==1.6.5
+
+# angularjs
+django-angular
+
+# django-geojson
+django-geojson
