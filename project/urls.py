@@ -30,4 +30,7 @@ urlpatterns = patterns('',
         KannelBackendView.as_view(backend_name="kannel-usb0-smsc")),
     url(r'^kannel/', include('rapidsms.backends.kannel.urls')),
 
+    # public_lights
+    url('^lights/', include('public_lights.urls')),
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
