@@ -21,4 +21,9 @@ django-admin-bootstrapped==1.6.5
 django-angular
 
 # django-geojson
-django-geojson
+django-geojson==2.5.0
+jsonfield==0.9.22
+django-leaflet==0.13.7
+
+# extra
+django-braces==1.4.0
