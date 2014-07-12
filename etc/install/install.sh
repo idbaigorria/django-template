@@ -39,13 +39,24 @@ apt-get install -y git
 apt-get install -y kannel
 # mcedit
 apt-get install -y mc
+# ppa stuff
+apt-get install -y python-software-properties
+add-apt-repository -y ppa:ubuntugis/ppa
+apt-get update -y
 
+# install GeoDjango dependencies
+apt-get install -y libgeos-3.2.2 libgdal1-1.7.0 libgeoip1
+apt-get install -y binutils libproj-dev gdal-bin python-gdal
+
+# create place holder for django logs
 mkdir -p /var/log/django
 chmod a+rw /var/log/django
 
 # Postgresql
 if ! command -v psql; then
+
     apt-get install -y postgresql-$PGSQL_VERSION libpq-dev
+    apt-get install -y postgresql-$PGSQL_VERSION-postgis postgis
     cp $PROJECT_DIR/etc/install/pg_hba.conf /etc/postgresql/$PGSQL_VERSION/main/
     /etc/init.d/postgresql reload
 fi
@@ -82,6 +93,10 @@ fi
 
 # postgresql setup for project
 createdb -Upostgres $DB_NAME
+psql -Upostgres $DB_NAME <<EOF
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topology;
+EOF
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
