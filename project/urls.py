@@ -31,6 +31,9 @@ urlpatterns = patterns('',
     url(r'^kannel/', include('rapidsms.backends.kannel.urls')),
 
     # public_lights
-    url('^lights/', include('public_lights.urls')),
+    url('^lights/', include('public_lights.urls', namespace='public_lights')),
+
+    # rest
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

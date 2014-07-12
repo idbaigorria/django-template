@@ -1,9 +1,8 @@
-#django basics
+# django basics
 Django==1.6.5
 South==0.8.4
 psycopg2==2.5.2
 django-compressor==1.4
-django-debug-toolbar==1.0.1
 gunicorn==18.0
 Fabric==1.8.1
 
@@ -12,6 +11,7 @@ RapidSMS==0.17.0
 
 # debugging tools
 ipython==1.2.1
+django-debug-toolbar==1.0.1
 
 # django bootstrap
 django-bootstrap3==4.8.2
@@ -27,3 +27,8 @@ django-leaflet==0.13.7
 
 # extra
 django-braces==1.4.0
+
+# REST
+djangorestframework==2.3.14
+markdown==2.4.1
+django-filter==0.7

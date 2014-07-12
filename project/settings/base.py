@@ -194,6 +194,9 @@ INSTALLED_APPS = (
     "rapidsms.contrib.registration",
     #"rapidsms.contrib.echo",
     "rapidsms.contrib.default",  # Must be last
+
+    # rest framework
+    "rest_framework"
 )
 
 
