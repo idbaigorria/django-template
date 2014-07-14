@@ -2,6 +2,7 @@
 
 import os
 import sys
+import socket
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 
@@ -24,7 +25,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         # we need postgis support for light_control app
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE':  'django.db.backends.postgresql_pyscopg2'
+
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'light_control',
         'USER': 'postgres',
@@ -34,6 +36,17 @@ DATABASES = {
         'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
     }
 }
+
+try:
+    from local_hostnames import names as hostnames
+except:
+    hostnames = []
+
+if socket.gethostname() in hostnames:
+    # this are non gis hosts
+    psycop = 'django.db.backends.postgresql_psycopg2'
+    DATABASES["default"]["ENGINE"]=psycop
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
