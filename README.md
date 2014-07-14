@@ -1,12 +1,47 @@
-light-control
-=============
+# Introduction
 
 Baigorria public lights control software
 
-building
-========
+# Execution
 
-The code is based on Django, you can run your own instance at any time, we are
-using vagrant to ease development and deployment, we took [1] as reference
+## Setup
 
-[1] http://blog.smalleycreative.com/tutorials/setup-a-django-vm-with-vagrant-virtualbox-and-chef/
+In order to run this project you will need to install Vagrant, check
+online on how to do it, the process to setup a devel machine is:
+
+    $ git clone https://github.com/idbaigorria/light-control.git
+    ....
+    $ vagrant up
+    ....
+    $ vagrant ssh
+    $ ./manage.py createsuperuser
+    $ exit
+
+
+## Running
+
+After you have follow the Setup process you can start the web server by
+running:
+
+    $ vagrant ssh
+    $ ./manage.py runserver 0:8000
+
+After that you can open 127.0.0.1:8111 to get into our site
+
+
+# Software Architecture
+
+TODO: Describe here which pieces are involved in the project
+
+# URLs: /
+
+This is a list of urls that's relevant for this project
+
+* /admin : Admin panel
+* /httptester : SMS interface testing page
+* /messagelog : SMS log
+* /backend/kannel-usb0-smsc : internal URL used by kannel for message
+  handling.
+* /lights : main project
+
+## URLs: /lights/
