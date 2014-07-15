@@ -80,6 +80,8 @@ if [[ ! -f /etc/init.d/kannel ]]; then
     # Kannel
     apt-get install -y kannel
     cp $PROJECT_DIR/etc/install/kannel.conf /etc/kannel/kannel.conf
+    cp /usr/share/doc/kannel/examples/modems.conf /etc/kannel/
+    usermod -a -G dialout kannel
 fi
 
 # bash environment global setup
