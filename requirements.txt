@@ -8,6 +8,7 @@ Fabric==1.8.1
 
 #sms manager
 RapidSMS==0.17.0
+djtables==0.1.2
 
 # debugging tools
 ipython==1.2.1
