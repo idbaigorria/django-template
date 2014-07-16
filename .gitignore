@@ -1,7 +1,7 @@
 /.vagrant
 project/settings/local*.py
 
-/static
+core/static
 *.pyc
 .*\#.*
 .venv
