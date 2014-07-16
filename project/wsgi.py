@@ -14,15 +14,16 @@ framework.
 
 """
 import os
+import sys
+import site
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
+PROJECT_DIR=os.path.abspath(os.path.dirname(__file__))
+ROOT_DIR=os.path.dirname(PROJECT_DIR)
 
-# This application object is used by any WSGI server configured to use this
-# file. This includes Django's development server, if the WSGI_APPLICATION
-# setting points here.
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+sys.path.extend([PROJECT_DIR, ROOT_DIR])
 
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+                      "project.settings")
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
