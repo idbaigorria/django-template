@@ -84,11 +84,11 @@ if [[ ! -f /etc/init.d/kannel ]]; then
     usermod -a -G dialout kannel
 fi
 
-if ! command -v ngnix ; then
-    apt-get install -y ngnix
-    cp $PROJECT_DIR/etc/install/ngnix.default.conf /etc/ngnix/sites-available/uwsgi.conf
-    rm /etc/ngnix/sites-enabled/default
-    ln -s /etc/ngnix/sites-available/uwsgi.conf /etc/ngnix/sites-enabled/default
+if ! command -v nginx ; then
+    apt-get install -y nginx
+    cp $PROJECT_DIR/etc/install/nginx.default.conf /etc/nginx/sites-available/uwsgi.conf
+    rm /etc/nginx/sites-enabled/default
+    ln -s /etc/nginx/sites-available/uwsgi.conf /etc/nginx/sites-enabled/default
 fi
 
 # bash environment global setup
