@@ -97,11 +97,15 @@ su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 
 
 # postgresql setup for project
-createdb -Upostgres $DB_NAME
-psql -Upostgres $DB_NAME <<EOF
+DB_EXISTS=`psql -l -Upostgres | grep $DB_NAME | wc -l`
+if "$DB_EXISTS"=="0" ; then
+    createdb -Upostgres $DB_NAME
+    psql -Upostgres $DB_NAME << EOF
 CREATE EXTENSION postgis;
 CREATE EXTENSION postgis_topology;
 EOF
+fi
+
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
