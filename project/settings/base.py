@@ -1,4 +1,4 @@
-# Django settings for light_control project.
+# Django settings for project_template project.
 
 import os
 import sys
