@@ -45,14 +45,6 @@ apt-get install -y git
 
 # mcedit
 apt-get install -y mc
-# ppa stuff
-apt-get install -y python-software-properties
-add-apt-repository -y ppa:ubuntugis/ppa
-apt-get update -y
-
-# install GeoDjango dependencies
-apt-get install -y libgeos-3.2.2 libgdal1-1.7.0 libgeoip1
-apt-get install -y binutils libproj-dev gdal-bin python-gdal
 
 # create place holder for django logs
 mkdir -p /var/log/django
@@ -60,9 +52,8 @@ chmod a+rw /var/log/django
 
 # Postgresql
 if ! command -v psql; then
-
     apt-get install -y postgresql-$PGSQL_VERSION libpq-dev
-    apt-get install -y postgresql-$PGSQL_VERSION-postgis-2.0 postgis
+
     cp $PROJECT_DIR/etc/install/pg_hba.conf \
         /etc/postgresql/$PGSQL_VERSION/main/
     /etc/init.d/postgresql reload
@@ -74,14 +65,6 @@ if ! command -v pip; then
 fi
 if [[ ! -f /usr/local/bin/virtualenv ]]; then
     pip install virtualenv virtualenvwrapper stevedore virtualenv-clone
-fi
-
-if [[ ! -f /etc/init.d/kannel ]]; then
-    # Kannel
-    apt-get install -y kannel
-    cp $PROJECT_DIR/etc/install/kannel.conf /etc/kannel/kannel.conf
-    cp /usr/share/doc/kannel/examples/modems.conf /etc/kannel/
-    usermod -a -G dialout kannel
 fi
 
 if ! command -v nginx ; then
@@ -100,10 +83,6 @@ su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 DB_EXISTS=`psql -l -Upostgres | grep $DB_NAME | wc -l`
 if "$DB_EXISTS"=="0" ; then
     createdb -Upostgres $DB_NAME
-    psql -Upostgres $DB_NAME << EOF
-CREATE EXTENSION postgis;
-CREATE EXTENSION postgis_topology;
-EOF
 fi
 
 
