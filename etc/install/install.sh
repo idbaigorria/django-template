@@ -113,6 +113,20 @@ su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
     PIP_DOWNLOAD_CACHE=/home/vagrant/.pip_download_cache \
     $VIRTUALENV_DIR/bin/pip install -r $PROJECT_DIR/requirements.txt"
 
+# install uwsgi system-wide
+if ! command -v uwsgi ; then
+    pip install uwsgi==2.0.6
+
+    mkdir -p /var/log/uwsgi/
+    chmod a+rw /var/log/uwsgi/
+
+    mkdir -p /etc/uwsgi/vassals
+
+    cp $PROJECT_DIR/uwsgi.ini /etc/uwsgi/vassals/django.ini
+    cp $PROJECT_DIR/etc/install/uwsgi.ini /etc/uwsgi/emperor.ini
+    cp $PROJECT_DIR/etc/install/uwsgi.conf /etc/init/
+fi
+
 echo "workon $VIRTUALENV_NAME" >> /home/vagrant/.bashrc
 
 # Set execute permissions on manage.py, as they get lost if we build \
