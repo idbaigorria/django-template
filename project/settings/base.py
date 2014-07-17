@@ -25,10 +25,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         # we need postgis support for light_control app
-        # 'ENGINE':  'django.db.backends.postgresql_pyscopg2'
-
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'light_control',
+        'ENGINE':  'django.db.backends.postgresql_pyscopg2',
+        'NAME': 'django_template',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '',  # Set to empty string for localhost.
@@ -36,17 +34,6 @@ DATABASES = {
         'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
     }
 }
-
-try:
-    from local_hostnames import names as hostnames
-except:
-    hostnames = []
-
-if socket.gethostname() in hostnames:
-    # this are non gis hosts
-    psycop = 'django.db.backends.postgresql_psycopg2'
-    DATABASES["default"]["ENGINE"]=psycop
-
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -153,7 +140,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
-    os.path.join(PROJECT_ROOT, 'public_lights', 'templates')
+    os.path.join(PROJECT_ROOT, 'django_template', 'templates')
 )
 
 FIXTURE_DIRS = (
@@ -167,11 +154,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
 
     # External apps
     "django_nose",
-    #"djtables",  # required by rapidsms.contrib.locations
     "django_tables2",
     "selectable",
 
@@ -179,7 +164,6 @@ INSTALLED_APPS = (
     'compressor',
     'debug_toolbar',
 
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 
     # bootstrap django
@@ -189,31 +173,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'core',
-    'public_lights',
-
-    # geojson
-    'jsonfield',
-    'djgeojson',
-    'leaflet',
-
-    # RapidSMS
-    "rapidsms",
-    "rapidsms.backends.database",
-    "rapidsms.backends.kannel",
-    "rapidsms.contrib.handlers",
-    "rapidsms.contrib.httptester",
-    "rapidsms.contrib.messagelog",
-    "rapidsms.contrib.messaging",
-    "rapidsms.contrib.registration",
-    #"rapidsms.contrib.echo",
-    "rapidsms.contrib.default",  # Must be last
+    'django_template',
 
     # rest framework
     "rest_framework"
 )
 
 
-EMAIL_SUBJECT_PREFIX = '[light_control] '
+EMAIL_SUBJECT_PREFIX = '[django_template] '
 
 INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
 
@@ -222,19 +189,13 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-# django-compressor settings
-COMPRESS_PRECOMPILERS = (
-    ('text/coffeescript', 'coffee --compile --stdio'),
-    ('text/less', 'lessc --no-color {infile} {outfile}'),
-)
-
-LOGFILE = '/var/log/django/public-lights.log'
+LOGFILE = '/var/log/django/django_template.log'
 
 try:
     a = open(LOGFILE, 'a')
     a.close()
 except:
-    LOGFILE='public-lights.log'
+    LOGFILE='django_template.log'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -285,60 +246,13 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'public_lights': {
-            'handlers': ['public_lights', 'console']
+        'django_template': {
+            'handlers': ['django_template', 'console']
         }
     }
 }
 
-
-INSTALLED_BACKENDS = {
-    "message_tester": {
-        "ENGINE": "rapidsms.backends.database.DatabaseBackend",
-    },
-
-    "kannel-fake-smsc" : {
-        "ENGINE":  "rapidsms.backends.kannel.KannelBackend",
-        "sendsms_url": "http://127.0.0.1:13013/cgi-bin/sendsms",
-        "sendsms_params": {"smsc": "FAKE",
-                           "from": "123", # not set automatically by SMSC
-                           "username": "rapidsms",
-                           "password": "CHANGE-ME"}, # or set in localsettings.py
-        "coding": 0,
-        "charset": "ascii",
-        "encode_errors": "ignore", # strip out unknown (unicode) characters
-    },
-
-    "kannel-usb0-smsc" : {
-        "ENGINE":  "rapidsms.backends.kannel.KannelBackend",
-        "sendsms_url": "http://127.0.0.1:13013/cgi-bin/sendsms",
-        "sendsms_params": {"smsc": "usb0-modem",
-                           "from": "+SIMphonenumber", # not set automatically by SMSC
-                           "username": "rapidsms",
-                           "password": "CHANGE-ME"}, # or set in localsettings.py
-        "coding": 0,
-        "charset": "ascii",
-        "encode_errors": "ignore", # strip out unknown (unicode) characters
-        "delivery_report_url": "http://127.0.0.1:8000"
-    },
-}
-
 LOGIN_REDIRECT_URL = '/'
 
-RAPIDSMS_HANDLERS = (
-    #'rapidsms.contrib.echo.handlers.echo.EchoHandler',
-    'rapidsms.contrib.echo.handlers.ping.PingHandler',
-    'public_lights.handlers.PanelHandler'
-)
-
-# leaflet config
-LEAFLET_CONFIG = {
-    # default display configuration, center into Granadero Baigorria, Santa Fe, Arg
-    # this are in long lat
-    'DEFAULT_CENTER': (-32.85818, -60.706956),
-    'DEFAULT_ZOOM': 14,
-    'MIN_ZOOM': 1,
-    'MAX_ZOOM': 18,
-}
-
+# required by uwsgi
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
