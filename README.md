@@ -24,6 +24,10 @@ gave to your github project):
     $ git remote set-url origin git@github.com:idbaigorria/[project_name].git
     $ sed -i "s/django_template/[project_name]/g" Vagrantfile
     $ sed -i "s/django_template/[project_name]/g" project/settings/base.py
+    $ sed -i "s/django_template/[project_name]/g" etc/install/nginx.default.conf
+    $ sed -i "s/django_template/[project_name]/g" etc/install/uwsgi.conf
+    $ sed -i "s/django_template/[project_name]/g" project/wsgi.py
+    $ sed -i "s/django_template/[project_name]/g" uwsgi.ini
     $ django-admin.py startapp [project_name]
 
 Now you are ready to start Vagrant, this will take a while, get coffe
