@@ -24,8 +24,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        # we need postgis support for light_control app
-        'ENGINE':  'django.db.backends.postgresql_pyscopg2',
+        'ENGINE': 'django.db.backends.postgresql_pyscopg2',
         'NAME': 'django_template',
         'USER': 'postgres',
         'PASSWORD': '',
