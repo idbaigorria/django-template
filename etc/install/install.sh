@@ -64,6 +64,8 @@ fi
 # create place holder for django logs
 mkdir -p /var/log/django
 chmod a+rw /var/log/django
+chown www-data:www-data /var/log/django
+
 
 # Postgresql
 if ! command -v psql; then
@@ -109,6 +111,7 @@ su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
 
 # install uwsgi system-wide
 if ! command -v uwsgi ; then
+    apt-get install libpcre3-dev
     pip install uwsgi==2.0.6
 
     mkdir -p /var/log/uwsgi/
@@ -130,4 +133,4 @@ chmod a+x $PROJECT_DIR/manage.py
 # Django project setup
 su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && \
    cd $PROJECT_DIR && ./manage.py syncdb --noinput && \
-   ./manage.py migrate"
+   ./manage.py migrate && ./manage.py collectstatic --noinput"
