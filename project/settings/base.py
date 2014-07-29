@@ -228,7 +228,7 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'public_lights': {
+        'django_template': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': LOGFILE,
