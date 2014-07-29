@@ -28,26 +28,38 @@ export LANGUAGE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
 
-EZ_SETUP=https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
-
 # Install essential packages from Apt
 apt-get update -y
-# Python dev packages
-apt-get install -y build-essential python python-dev
+
+if ! command python; then
+    # Python dev packages
+    apt-get install -y build-essential python python-dev
+fi
+
 # python-setuptools being installed manually
-wget $EZ_SETUP -O - | python
+if [ ! -f /home/vagrant/.ez_setup ]; then
+    EZ_SETUP=https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+    wget $EZ_SETUP -O - | python
+    touch /home/vagrant/.ez_setup
+fi
+
 # Dependencies for image processing with Pillow (replacement for PIL)
 # supporting: jpeg, tiff, png, freetype, littlecms
 # (pip install pillow to get pillow itself, not in requirements.txt)
 apt-get install -y libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev \
     liblcms2-dev
+
 # Git (we'd rather avoid people keeping credentials for git commits
 # in the repo, but sometimes we need it for pip requirements that
 # aren't in PyPI)
-apt-get install -y git
+if ! command -v git ; then
+    apt-get install -y git
+fi
 
 # mcedit
-apt-get install -y mc
+if ! command -v mcedit; then
+    apt-get install -y mc
+fi
 
 # create place holder for django logs
 mkdir -p /var/log/django
@@ -66,6 +78,7 @@ fi
 if ! command -v pip; then
     easy_install -U pip
 fi
+
 if [[ ! -f /usr/local/bin/virtualenv ]]; then
     pip install virtualenv virtualenvwrapper stevedore virtualenv-clone
 fi
@@ -81,10 +94,9 @@ fi
 cp -p $PROJECT_DIR/etc/install/bashrc /home/vagrant/.bashrc
 su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 
-
 # postgresql setup for project
 DB_EXISTS=`psql -l -Upostgres | grep $DB_NAME | wc -l`
-if "$DB_EXISTS"=="0" ; then
+if [[ $DB_EXISTS -eq 0 ]]; then
     createdb -Upostgres $DB_NAME
 fi
 
