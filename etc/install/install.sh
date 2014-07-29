@@ -16,10 +16,13 @@ VIRTUALENV_DIR=/home/vagrant/.virtualenvs/$PROJECT_NAME
 
 PGSQL_VERSION=9.1
 
-# Need to fix locale so that Postgres creates databases in UTF-8
-cp -p $PROJECT_DIR/etc/install/etc-bash.bashrc /etc/bash.bashrc
-locale-gen en_GB.UTF-8
-dpkg-reconfigure locales
+if [ ! -f /home/vagrant/.locales ]; then
+    # Need to fix locale so that Postgres creates databases in UTF-8
+    cp -p $PROJECT_DIR/etc/install/etc-bash.bashrc /etc/bash.bashrc
+    locale-gen en_GB.UTF-8
+    dpkg-reconfigure locales
+    touch /home/vagrant/.locales
+fi
 
 export LANGUAGE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
